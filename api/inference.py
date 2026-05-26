@@ -82,6 +82,7 @@ def generate(
     max_tokens: int = 100,
     temperature: float = 0.8,
     top_k: int = 40,
+    repetition_penalty: float = 1.3,
 ) -> tuple[str, int]:
     """
     프롬프트를 받아 텍스트를 생성합니다.
@@ -106,6 +107,7 @@ def generate(
             max_new_tokens=max_tokens,
             temperature=temperature,
             top_k=top_k,
+            repetition_penalty=repetition_penalty,
         )
 
     # 생성된 부분만 디코딩 (프롬프트 제외)

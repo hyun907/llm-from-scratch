@@ -13,11 +13,12 @@ export default function PromptForm({ onSubmit, isLoading }: Props) {
   const [maxTokens, setMaxTokens] = useState(100)
   const [temperature, setTemperature] = useState(0.8)
   const [topK, setTopK] = useState(40)
+  const [repetitionPenalty, setRepetitionPenalty] = useState(1.3)
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!prompt.trim() || isLoading) return
-    onSubmit({ prompt, max_tokens: maxTokens, temperature, top_k: topK })
+    onSubmit({ prompt, max_tokens: maxTokens, temperature, top_k: topK, repetition_penalty: repetitionPenalty })
   }
 
   return (
@@ -37,7 +38,7 @@ export default function PromptForm({ onSubmit, isLoading }: Props) {
       </div>
 
       {/* 옵션 */}
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 gap-6">
         <SliderField
           label="Max Tokens"
           value={maxTokens}
@@ -58,6 +59,13 @@ export default function PromptForm({ onSubmit, isLoading }: Props) {
           min={1} max={100} step={1}
           onChange={setTopK}
           hint="상위 K개 토큰 중에서만 샘플링"
+        />
+        <SliderField
+          label={`Repetition Penalty: ${repetitionPenalty.toFixed(1)}`}
+          value={repetitionPenalty}
+          min={1.0} max={3.0} step={0.1}
+          onChange={setRepetitionPenalty}
+          hint="높을수록 반복 억제. 1.3~1.5 권장"
         />
       </div>
 

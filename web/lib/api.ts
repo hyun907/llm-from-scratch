@@ -3,6 +3,7 @@ export interface GenerateParams {
   max_tokens: number
   temperature: number
   top_k: number
+  repetition_penalty: number
 }
 
 export interface GenerateResult {

@@ -1,0 +1,41 @@
+디바이스: mps
+vocab_size: 2053
+train: 135,333 토큰 / val: 15,036 토큰
+모델: n_layer=6 n_head=6 n_embd=384 block_size=128
+파라미터: 11,426,688개 (11.43M, non-embedding)
+옵티마이저: decay 그룹 11,454,336 / no-decay 그룹 21,504
+
+학습 시작: 5000 iters
+
+iter     0 | lr 1.50e-07 | train 7.6801 | val 7.6866 | elapsed    4.1s
+iter   200 | lr 3.00e-05 | train 6.9824 | val 6.9987 | elapsed   73.9s
+iter   400 | lr 2.99e-05 | train 6.9444 | val 7.0011 | elapsed  144.7s
+iter   600 | lr 2.95e-05 | train 7.1702 | val 7.2301 | elapsed  205.9s
+iter   800 | lr 2.90e-05 | train 7.5022 | val 7.5944 | elapsed  266.7s
+iter  1000 | lr 2.82e-05 | train 7.8478 | val 7.9261 | elapsed  312.1s
+iter  1200 | lr 2.72e-05 | train 8.2980 | val 8.3526 | elapsed  338.6s
+iter  1400 | lr 2.60e-05 | train 8.7711 | val 8.8196 | elapsed  365.9s
+iter  1600 | lr 2.47e-05 | train 9.2768 | val 9.3219 | elapsed  393.4s
+iter  1800 | lr 2.32e-05 | train 9.7666 | val 9.8369 | elapsed  423.7s
+iter  2000 | lr 2.17e-05 | train 10.2403 | val 10.3225 | elapsed  460.5s
+iter  2200 | lr 2.00e-05 | train 10.6705 | val 10.7371 | elapsed  498.1s
+iter  2400 | lr 1.83e-05 | train 11.0481 | val 11.1071 | elapsed  534.4s
+iter  2600 | lr 1.65e-05 | train 11.4062 | val 11.4334 | elapsed  568.8s
+iter  2800 | lr 1.47e-05 | train 11.6699 | val 11.6800 | elapsed  606.8s
+iter  3000 | lr 1.30e-05 | train 11.8516 | val 11.8978 | elapsed  646.3s
+iter  3200 | lr 1.13e-05 | train 12.0790 | val 12.1280 | elapsed  684.7s
+iter  3400 | lr 9.75e-06 | train 12.2919 | val 12.3054 | elapsed  722.4s
+iter  3600 | lr 8.28e-06 | train 12.4064 | val 12.4476 | elapsed  759.4s
+iter  3800 | lr 6.95e-06 | train 12.5217 | val 12.5647 | elapsed  796.2s
+iter  4000 | lr 5.79e-06 | train 12.5894 | val 12.6499 | elapsed  833.3s
+iter  4200 | lr 4.81e-06 | train 12.7150 | val 12.7767 | elapsed  869.2s
+iter  4400 | lr 4.03e-06 | train 12.7504 | val 12.8120 | elapsed  906.5s
+iter  4600 | lr 3.46e-06 | train 12.8129 | val 12.8575 | elapsed  947.5s
+iter  4800 | lr 3.12e-06 | train 12.8125 | val 12.8943 | elapsed  989.8s
+iter  5000 | lr 3.00e-06 | train 12.8862 | val 12.9296 | elapsed 1034.6s
+
+✅ 학습 완료. best val loss: 6.9987
+   체크포인트: checkpoints/model.pt
+
+--- 생성 미리보기 ---
+고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고 30고고고고고고고고고고고고고고고고고고고고고고고고고고고고고고고고고고고고고고고고고고

@@ -219,12 +219,17 @@ class GPT(nn.Module):
         max_new_tokens: int,
         temperature: float = 1.0,
         top_k: int | None = None,
+        repetition_penalty: float = 1.0,
     ) -> torch.Tensor:
         """
         idx (B, T) 컨텍스트에서 시작해 max_new_tokens개의 토큰을 이어붙임.
 
-        temperature: 1보다 크면 다양하게, 작으면 보수적으로
-        top_k: 상위 k개 토큰 중에서만 샘플링 (None이면 전체)
+        temperature:        1보다 크면 다양하게, 작으면 보수적으로
+        top_k:              상위 k개 토큰 중에서만 샘플링 (None이면 전체)
+        repetition_penalty: 1.0이면 효과 없음. 1.3~1.5 권장.
+                            이미 등장한 토큰의 logit을 나눠서 재등장 확률을 낮춤.
+                            - logit > 0: penalty로 나눔 → 값이 작아짐
+                            - logit < 0: penalty를 곱함  → 절댓값이 커져 확률이 낮아짐
 
         주의: eval/train 모드 전환은 호출자가 직접 관리해야 합니다.
         이 함수 내부에서 self.eval()을 호출하지 않습니다.
@@ -236,6 +241,16 @@ class GPT(nn.Module):
             logits, _ = self(idx_cond)
             # 마지막 위치의 분포만 사용 (다음 토큰을 예측해야 하므로)
             logits = logits[:, -1, :] / temperature
+
+            # Repetition Penalty: 이미 등장한 토큰의 확률을 낮춤
+            if repetition_penalty != 1.0:
+                for b in range(idx.size(0)):
+                    seen = set(idx[b].tolist())
+                    for token_id in seen:
+                        if logits[b, token_id] > 0:
+                            logits[b, token_id] /= repetition_penalty
+                        else:
+                            logits[b, token_id] *= repetition_penalty
 
             if top_k is not None:
                 v, _ = torch.topk(logits, min(top_k, logits.size(-1)))

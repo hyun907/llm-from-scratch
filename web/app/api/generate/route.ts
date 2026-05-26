@@ -7,6 +7,7 @@ interface GenerateBody {
   max_tokens: number
   temperature: number
   top_k: number
+  repetition_penalty: number
 }
 
 function isValidBody(v: unknown): v is GenerateBody {
@@ -16,7 +17,8 @@ function isValidBody(v: unknown): v is GenerateBody {
     typeof b.prompt === 'string' &&
     typeof b.max_tokens === 'number' &&
     typeof b.temperature === 'number' &&
-    typeof b.top_k === 'number'
+    typeof b.top_k === 'number' &&
+    typeof b.repetition_penalty === 'number'
   )
 }
 

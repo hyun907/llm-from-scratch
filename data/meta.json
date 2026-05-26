@@ -1,14 +1,15 @@
 {
-  "vocab_size": 517,
-  "n_train_tokens": 2121,
-  "n_val_tokens": 235,
+  "vocab_size": 2053,
+  "n_train_tokens": 135333,
+  "n_val_tokens": 15036,
   "special_tokens": {
-    "<|bos|>": 512,
-    "<|eos|>": 513,
-    "<|user|>": 514,
-    "<|assistant|>": 515,
-    "<|pad|>": 516
+    "<|bos|>": 2048,
+    "<|eos|>": 2049,
+    "<|user|>": 2050,
+    "<|assistant|>": 2051,
+    "<|pad|>": 2052
   },
-  "source_file": "data/demo_corpus.txt",
-  "source_chars": 2539
+  "source_file": "data/korean_corpus.txt",
+  "source_chars": 231695,
+  "language": "ko"
 }

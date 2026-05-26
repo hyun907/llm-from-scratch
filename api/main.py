@@ -52,6 +52,7 @@ class GenerateRequest(BaseModel):
     max_tokens: int = Field(default=100, ge=1, le=500)
     temperature: float = Field(default=0.8, ge=0.1, le=2.0)
     top_k: int = Field(default=40, ge=1, le=200)
+    repetition_penalty: float = Field(default=1.3, ge=1.0, le=3.0)
 
 
 class GenerateResponse(BaseModel):
@@ -100,6 +101,7 @@ def generate_text(req: GenerateRequest):
             max_tokens=req.max_tokens,
             temperature=req.temperature,
             top_k=req.top_k,
+            repetition_penalty=req.repetition_penalty,
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
