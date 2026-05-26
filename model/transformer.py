@@ -225,8 +225,10 @@ class GPT(nn.Module):
 
         temperature: 1보다 크면 다양하게, 작으면 보수적으로
         top_k: 상위 k개 토큰 중에서만 샘플링 (None이면 전체)
+
+        주의: eval/train 모드 전환은 호출자가 직접 관리해야 합니다.
+        이 함수 내부에서 self.eval()을 호출하지 않습니다.
         """
-        self.eval()
         for _ in range(max_new_tokens):
             # max_seq_len 넘으면 뒤쪽만 남김 (sliding window)
             idx_cond = idx[:, -self.config.max_seq_len :]

@@ -58,7 +58,7 @@ def load_model(
     print(f"[inference] 디바이스: {_device}")
 
     # 체크포인트 로드
-    ckpt = torch.load(checkpoint_path, map_location=_device, weights_only=False)
+    ckpt = torch.load(checkpoint_path, map_location=_device, weights_only=True)
     config = GPTConfig(**ckpt["config"])
     _model = GPT(config).to(_device)
     _model.load_state_dict(ckpt["model_state"])
