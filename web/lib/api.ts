@@ -10,11 +10,15 @@ export interface GenerateResult {
   tokens_generated: number
 }
 
-export async function generateText(params: GenerateParams): Promise<GenerateResult> {
+export async function generateText(
+  params: GenerateParams,
+  signal?: AbortSignal,
+): Promise<GenerateResult> {
   const res = await fetch('/api/generate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(params),
+    signal,
   })
 
   if (!res.ok) {

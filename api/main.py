@@ -6,6 +6,7 @@ FastAPI 추론 서버.
     (프로젝트 루트에서 실행)
 """
 
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
@@ -31,10 +32,12 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="LLM From Scratch API", lifespan=lifespan)
 
-# Next.js 개발 서버에서 오는 요청 허용
+# 허용할 origin을 환경변수로 관리 (쉼표로 구분)
+# 예: ALLOWED_ORIGINS="http://localhost:3000,https://myapp.com"
+_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=_origins,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
@@ -80,6 +83,16 @@ def health():
 def generate_text(req: GenerateRequest):
     if not is_loaded():
         raise HTTPException(status_code=503, detail="모델이 로드되지 않았습니다.")
+
+    # 프롬프트가 모델의 max_seq_len을 초과하면 서버 오류 대신 클라이언트 오류로 처리
+    from .inference import _model, _tokenizer
+    if _model and _tokenizer:
+        token_len = len(_tokenizer.encode(req.prompt))
+        if token_len >= _model.config.max_seq_len:
+            raise HTTPException(
+                status_code=422,
+                detail=f"프롬프트가 너무 깁니다. ({token_len} 토큰, 최대 {_model.config.max_seq_len - 1})"
+            )
 
     try:
         generated, tokens_generated = generate(
