@@ -1,0 +1,21 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.Python
+*.egg-info/
+
+# Node
+web/node_modules/
+web/.next/
+
+# 학습 체크포인트 (용량 큼, 별도 관리)
+checkpoints/
+
+# 학습 데이터 바이너리 (원본 corpus.txt는 포함)
+data/train.bin
+data/val.bin
+
+# OS
+.DS_Store

@@ -1,0 +1,14 @@
+{
+  "vocab_size": 517,
+  "n_train_tokens": 2121,
+  "n_val_tokens": 235,
+  "special_tokens": {
+    "<|bos|>": 512,
+    "<|eos|>": 513,
+    "<|user|>": 514,
+    "<|assistant|>": 515,
+    "<|pad|>": 516
+  },
+  "source_file": "data/demo_corpus.txt",
+  "source_chars": 2539
+}
