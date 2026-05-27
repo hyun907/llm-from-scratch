@@ -92,25 +92,30 @@ python train.py
 
 **한국어 데이터**
 ```bash
-# HuggingFace 위키 다운로드 시도 → 실패 시 번들 코퍼스 사용
-python -m data.prepare_korean --vocab-size 2048
+# HuggingFace 위키 다운로드 (약 2M 자, HF_TOKEN 권장)
+export HF_TOKEN=your_token_here
+python -m data.prepare_korean --n-samples 10000 --vocab-size 4096
 
-# 6-layer 모델 학습 (MPS 기준 약 20~40분)
-python train.py --max-iters 5000 --n-layer 6 --n-head 6 --n-embd 384 --block-size 128
+# 6-layer 모델 학습 (MPS 기준 약 20분, early stopping 기준 ~4000 iter)
+python train.py --max-iters 5000 --n-layer 6 --n-head 6 --n-embd 384 --block-size 128 --batch-size 32
 ```
+
+> **주의:** `--block-size 256` 이상은 Apple Silicon MPS에서 데드락 발생 확인. `128` 권장.
 
 ---
 
 ## 모델 설정
 
-| 설정 | 데모 | 한국어 학습 | 설명 |
-|------|------|------------|------|
-| vocab_size | 512 | 2,053 | 토크나이저 어휘 크기 |
-| n_layer | 4 | 6 | Transformer Block 개수 |
-| n_head | 4 | 6 | Attention 헤드 수 |
-| n_embd | 192 | 384 | 임베딩 차원 |
-| max_seq_len | 64 | 128 | 최대 시퀀스 길이 |
-| train tokens | 2,121 | 135,333 | 학습 데이터 크기 |
+| 설정 | 데모 | 한국어 v1 | 한국어 v2 (현재) | 설명 |
+|------|------|----------|----------------|------|
+| vocab_size | 512 | 2,053 | **4,101** | 토크나이저 어휘 크기 |
+| n_layer | 4 | 6 | 6 | Transformer Block 개수 |
+| n_head | 4 | 6 | 6 | Attention 헤드 수 |
+| n_embd | 192 | 384 | 384 | 임베딩 차원 |
+| max_seq_len | 64 | 128 | 128 | 최대 시퀀스 길이 |
+| train tokens | 2,121 | 541,329 | **1,039,157** | 학습 데이터 크기 |
+| params | ~1M | ~6M | **12.2M** | 모델 파라미터 수 |
+| best val loss | - | 3.46 | **4.80** | (vocab 다름, 직접 비교 불가) |
 
 ---
 
@@ -203,3 +208,13 @@ LayerNorm → Linear → logits
 |------|--------|------|
 | `FASTAPI_URL` | `http://localhost:8000` | Next.js → FastAPI 주소 |
 | `ALLOWED_ORIGINS` | `http://localhost:3000` | CORS 허용 origin (쉼표 구분) |
+| `HF_TOKEN` | 없음 | HuggingFace 인증 토큰 (데이터 다운로드 속도 향상) |
+
+## 알려진 이슈 / 트러블슈팅
+
+| 증상 | 원인 | 해결 |
+|------|------|------|
+| 생성 텍스트에 `□` 출력 | 불완전한 UTF-8 바이트 시퀀스 | `api/inference.py`에서 후처리 제거 (이미 적용됨) |
+| MPS 프리즈 (장시간 멈춤) | `--block-size 256` 이상 | `--block-size 128` 사용 |
+| val loss가 개선 안 됨 | 데이터 부족으로 즉시 과적합 | 데이터 최소 500K 토큰 이상 확보 후 학습 |
+| HF 다운로드 rate limit | 미인증 요청 | `HF_TOKEN` 환경변수 설정 |
