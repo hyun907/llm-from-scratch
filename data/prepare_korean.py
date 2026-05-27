@@ -410,7 +410,6 @@ def try_download_hf_korean(n_samples: int = 3000) -> str | None:
             "20231101.ko",
             split="train",
             streaming=True,
-            trust_remote_code=True,
         )
         texts = []
         total_chars = 0
@@ -421,7 +420,7 @@ def try_download_hf_korean(n_samples: int = 3000) -> str | None:
             if len(text) > 100:  # 너무 짧은 문서 제외
                 texts.append(text)
                 total_chars += len(text)
-            if total_chars > 200_000:  # 20만 자 정도면 충분
+            if total_chars > 2_000_000:  # 200만 자 목표 (원래 200K → 10배 확대)
                 break
         if texts:
             print(f"  다운로드 완료: {len(texts)}개 문서, {total_chars:,}자")

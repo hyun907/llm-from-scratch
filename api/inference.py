@@ -115,4 +115,8 @@ def generate(
     generated_text = _tokenizer.decode(generated_ids)
     tokens_generated = len(generated_ids) - prompt_len
 
+    # 불완전한 UTF-8 바이트 시퀀스로 생긴 대체 문자(U+FFFD) 제거
+    # 모델이 한국어 멀티바이트 글자를 절반만 생성할 때 발생
+    generated_text = generated_text.replace("�", "")
+
     return generated_text, tokens_generated

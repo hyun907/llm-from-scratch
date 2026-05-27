@@ -1,15 +1,15 @@
 {
-  "vocab_size": 2053,
-  "n_train_tokens": 135333,
-  "n_val_tokens": 15036,
+  "vocab_size": 4101,
+  "n_train_tokens": 1039157,
+  "n_val_tokens": 115461,
   "special_tokens": {
-    "<|bos|>": 2048,
-    "<|eos|>": 2049,
-    "<|user|>": 2050,
-    "<|assistant|>": 2051,
-    "<|pad|>": 2052
+    "<|bos|>": 4096,
+    "<|eos|>": 4097,
+    "<|user|>": 4098,
+    "<|assistant|>": 4099,
+    "<|pad|>": 4100
   },
   "source_file": "data/korean_corpus.txt",
-  "source_chars": 231695,
+  "source_chars": 2005518,
   "language": "ko"
 }
